@@ -1,3 +1,6 @@
+
+import java.util.Arrays;
+
 // Name: Bezhan Sangov
 // Programming Language: Java
 // IDE: VS Code
@@ -62,6 +65,45 @@ public class Homework2 {
                 }
             }
         }
+    }
+
+    public static int[] mergeSort(int[] originalArr) {
+        if (originalArr.length <= 1) {return originalArr;}
+
+        int mid = originalArr.length / 2;
+        int[] leftArr = mergeSort(Arrays.copyOf(originalArr, mid));
+        int[] rightArr = mergeSort(Arrays.copyOfRange(originalArr, mid, originalArr.length));
+
+        return merge(leftArr, rightArr);
+    }
+
+    public static int[] merge(int[] left, int[] right) {
+        int[] res = new int[left.length+right.length];
+        int l = 0; int r = 0;
+        int resIdx = 0;
+
+        while (l < left.length && r < right.length) {
+            if (left[l] <= right[r]) {
+                res[resIdx] = left[l];
+                l++;
+            } else {
+                res[resIdx] = right[r];
+                r++;
+            }
+            resIdx++;
+        }
+
+        while (l < left.length) {
+            res[resIdx] = left[l];
+            resIdx++;
+            l++;
+        }
+        while (r < right.length) {
+            res[resIdx] = right[r];
+            resIdx++;
+            r++;
+        }
+        return res;
     }
 
     public static int linearSearch(int[]arr, int target) {
