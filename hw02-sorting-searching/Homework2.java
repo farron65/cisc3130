@@ -199,3 +199,48 @@ Q6: Complete the following:
         Bubble Sort = O(n^2)
         Merge Sort = O(n * (log n))
 */
+
+
+/*
+Part 11 - Searching Questions
+
+Q7: What is the Big O time complexity of Linear Search?
+
+        It's O(n), because worst case scenario the target is at the end of the array
+        So the algorithm has to loop through all the elements, that means the search time increases
+        as the size of the array increases.
+
+Q8: What is the Big O time complexity of Binary Search?
+
+        O(log n). Each comparison eliminates half of the remaining array,
+        so the search space shrinks exponentially. For an array of size n,
+        it only takes about log2(n) comparisons to find the target, or determine
+        it doesn't exist.
+
+Q9: Why does Binary Search require sorted data?
+
+        Binary Search works by comparing the target to the middle element
+        and eliminating half the remaining elements based on that comparison.
+        This only works if the data is sorted - sorting guarantees that everything
+        on one side of the midpoint is smaller and everything on the other side is larger,
+        so we know for certain which half the target could be in.
+
+Q10: Which search would you use if the data were not sorted?
+
+        Linear, because Binary doesn't work on unsorted values
+
+Q11: Which search would generally be better for a very large sorted array?
+
+        Binary, because of its time complexity
+*/
+
+
+/*
+Part 12 - Algorithm Comparison Table
+
+Algorithm       | Purpose    | Big O
+Bubble Sort     | Sorting    | O(n^2)
+Merge Sort      | Sorting    | O(n log n)
+Linear Search   | Searching  | O(n)
+Binary Search   | Searching  | O(log n)
+*/
