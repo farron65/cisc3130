@@ -17,13 +17,13 @@ public class Homework2 {
         System.out.println("\nLinear Search");
 
         System.out.println("Target: 3"); // near beginning
-        System.out.printf("Target found at index: %d\n", linearSearch(originalArr, 3));
+        printSearchResult(linearSearch(originalArr, 3));
 
         System.out.println("Target: 34"); // near end
-        System.out.printf("Target found at index: %d\n", linearSearch(originalArr, 34));
+        printSearchResult(linearSearch(originalArr, 34));
 
         System.out.println("Target: 100"); // does not exist
-        System.out.printf("Target found at index: %d\n", linearSearch(originalArr, 100));
+        printSearchResult(linearSearch(originalArr, 100));
 
         // Bubble Sort
         bubbleSort(bubbleArr);
@@ -39,13 +39,13 @@ public class Homework2 {
         System.out.println("\nBinary Search");
 
         System.out.println("Target: 1"); // near beginning
-        System.out.printf("Target found at index: %d\n", binarySearch(bubbleArr, 1));
+        printSearchResult(binarySearch(bubbleArr, 1));
 
         System.out.println("Target: 91"); // near end
-        System.out.printf("Target found at index: %d\n", binarySearch(bubbleArr, 91));
+        printSearchResult(binarySearch(bubbleArr, 91));
 
         System.out.println("Target: 100"); // does not exist
-        System.out.printf("Target found at index: %d\n", binarySearch(bubbleArr, 100));
+        printSearchResult(binarySearch(bubbleArr, 100));
     }
 
     public static void printArr(int[] arr) {
@@ -53,6 +53,14 @@ public class Homework2 {
             System.out.print(n + " ");
         }
         System.out.println("");
+    }
+
+    public static void printSearchResult(int result) {
+        if (result == -1) {
+            System.out.println("Target not found.");
+        } else {
+            System.out.printf("Target found at index: %d\n", result);
+        }
     }
 
     // Bubble Sort
