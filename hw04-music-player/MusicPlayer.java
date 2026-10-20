@@ -1,6 +1,7 @@
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
@@ -126,13 +127,21 @@ public class MusicPlayer {
     public List<String> showUpNext() {
         List<String> listOfTitles = new ArrayList<>();
         for (Song song: upNext) {
-            listOfTitles.add(song.title);
+            if (this.library.containsKey(song.id)) {
+                listOfTitles.add(song.title);
+            }
         }
         return listOfTitles;
     }
 
     public Song next() {
-        Song nextSong = upNext.pollFirst();
+        Song nextSong = null;
+        while (!this.upNext.isEmpty() && nextSong == null) {
+            Song candidate = this.upNext.pollFirst();
+            if (this.library.containsKey(candidate.id)) {
+                nextSong = candidate;
+            }
+        }
 
         if (nextSong == null) {
             if (this.currentSong == null) {
@@ -144,11 +153,11 @@ public class MusicPlayer {
             }
             nextSong = curr.next.song;
         }
+
         if (this.currentSong != null) {
             this.history.push(this.currentSong);
         }
         startSong(nextSong);
-        
         return nextSong;
     }
 
@@ -208,5 +217,21 @@ public class MusicPlayer {
         }
 
         return true;
+    }
+
+    // EXTRA CREDIT
+
+    public List<String> topSongs(int n) {
+        List<Map.Entry<String, Integer>> mostPlayedSongs = new ArrayList<>(this.playsCount.entrySet());
+        List<String> nSongs = new ArrayList<>();
+        
+        mostPlayedSongs.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+        int limit = Math.min(n, mostPlayedSongs.size());
+        for (int i = 0; i < limit; i++) {
+            String id = mostPlayedSongs.get(i).getKey();
+            nSongs.add(this.library.get(id).song.title);
+        }
+
+        return nSongs;
     }
 }
