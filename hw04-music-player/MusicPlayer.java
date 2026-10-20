@@ -152,6 +152,10 @@ public class MusicPlayer {
         return nextSong;
     }
 
+    public Song nowPlaying() {
+        return this.currentSong;
+    }
+
     public List<String> showHistory() {
         List<String> songHistory = new ArrayList<>();
 
@@ -159,5 +163,16 @@ public class MusicPlayer {
             songHistory.add(song.title);
         }
         return songHistory;
+    }
+
+    public Song back() {
+        if (this.history.isEmpty()) {return null;}
+        
+        Song lastSong = this.history.poll();
+
+        upNext.addFirst(this.currentSong);
+
+        startSong(lastSong);   
+        return lastSong;     
     }
 }
