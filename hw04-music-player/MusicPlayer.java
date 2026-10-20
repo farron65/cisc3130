@@ -169,7 +169,9 @@ public class MusicPlayer {
         List<String> songHistory = new ArrayList<>();
 
         for (Song song : this.history) {
-            songHistory.add(song.title);
+            if (this.library.containsKey(song.id)) {
+                songHistory.add(song.title);
+            }
         }
         return songHistory;
     }
@@ -177,8 +179,15 @@ public class MusicPlayer {
     public Song back() {
         if (this.history.isEmpty()) {return null;}
         
-        Song lastSong = this.history.poll();
-
+        Song lastSong = null;
+        while (!this.history.isEmpty() && lastSong == null) {
+            Song songInHistory = this.history.poll();
+            if (this.library.containsKey(songInHistory.id)) {
+                lastSong = songInHistory;
+            }
+        }
+        if (lastSong == null) {return null;}
+        
         upNext.addFirst(this.currentSong);
 
         startSong(lastSong);   
