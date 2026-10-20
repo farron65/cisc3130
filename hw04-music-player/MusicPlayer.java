@@ -5,7 +5,6 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 
 class Node {
@@ -29,7 +28,7 @@ public class MusicPlayer {
     Song currentSong;
     Map<String, Integer> playsCount;
 
-    Stack<Song> history;
+    Deque<Song> history;
 
     Deque<Song> upNext;
 
@@ -42,7 +41,7 @@ public class MusicPlayer {
         this.currentSong = null;
 
         this.playsCount = new HashMap<>();
-        this.history = null;
+        this.history = new ArrayDeque<>();
 
         this.upNext = new ArrayDeque<>();
     }
@@ -76,7 +75,7 @@ public class MusicPlayer {
     }
 
     public List<String> showPlaylist() {
-        List<String> songs = new ArrayList<String>();
+        List<String> songs = new ArrayList<>();
         Node start = this.head;
 
         while (start != null) {
@@ -130,5 +129,35 @@ public class MusicPlayer {
             listOfTitles.add(song.title);
         }
         return listOfTitles;
+    }
+
+    public Song next() {
+        Song nextSong = upNext.pollFirst();
+
+        if (nextSong == null) {
+            if (this.currentSong == null) {
+                return null;
+            }
+            Node curr = this.library.get(this.currentSong.id);
+            if (curr.next == null) {
+                return null;
+            }
+            nextSong = curr.next.song;
+        }
+        if (this.currentSong != null) {
+            this.history.push(this.currentSong);
+        }
+        startSong(nextSong);
+        
+        return nextSong;
+    }
+
+    public List<String> showHistory() {
+        List<String> songHistory = new ArrayList<>();
+
+        for (Song song : this.history) {
+            songHistory.add(song.title);
+        }
+        return songHistory;
     }
 }
