@@ -175,4 +175,38 @@ public class MusicPlayer {
         startSong(lastSong);   
         return lastSong;     
     }
+
+    public boolean removeSong(String id) {
+        if (!this.library.containsKey(id)) {return false;} 
+        if (this.currentSong != null) {
+            if (this.currentSong.id.equals(id)) {return false;}
+        }
+
+        Node song = this.library.remove(id);
+        this.playsCount.remove(id);
+
+        Node prevNode;
+        Node nextNode;
+
+        if (song.prev == null) {
+            this.head = song.next;
+            if (song.next == null) {
+                this.tail = null;
+            } else {
+                this.head.prev = null;
+            }
+        } else if (song.next == null) {
+            prevNode = song.prev;
+            prevNode.next = null; 
+            this.tail = song.prev;
+            
+        } else {
+            prevNode = song.prev;
+            nextNode = song.next;
+            prevNode.next = song.next;
+            nextNode.prev = prevNode;
+        }
+
+        return true;
+    }
 }
