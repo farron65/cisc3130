@@ -1,6 +1,15 @@
+/*
+ * Structure choices:
+ *   Playlist:    Build. Doubly linked list of my own Node class (head, tail).
+ *   Library:     Reuse. HashMap<String, Node>, song id -> playlist node.
+ *   Up next:     Reuse. ArrayDeque<Song>, addFirst/addLast/pollFirst.
+ *   History:     Reuse. ArrayDeque<Song> used as a stack (push/poll).
+ *   Play counts: Reuse. HashMap<String, Integer>, song id -> count.
+ */
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
@@ -187,7 +196,7 @@ public class MusicPlayer {
             }
         }
         if (lastSong == null) {return null;}
-        
+
         upNext.addFirst(this.currentSong);
 
         startSong(lastSong);   
@@ -242,5 +251,15 @@ public class MusicPlayer {
         }
 
         return nSongs;
+    }
+
+    public void shuffleUpNext() {
+        List<Song> songs = new ArrayList<>();
+        for (Node n = this.head; n != null; n = n.next) {
+            songs.add(n.song);
+        }
+        Collections.shuffle(songs);
+        this.upNext.clear();
+        this.upNext.addAll(songs);
     }
 }

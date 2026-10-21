@@ -69,5 +69,14 @@ public class Test {
         System.out.println("back: " + t(e.back()));
         System.out.println("now playing: " + t(e.nowPlaying()));
         System.out.println("playlist: " + e.showPlaylist());
+
+        System.out.println("\n\n--- Extra credit ---");
+        System.out.println("top 2: " + p.topSongs(2));
+        System.out.println("top 10: " + p.topSongs(10));
+        p.shuffleUpNext();
+        System.out.println("shuffled up next: " + p.showUpNext());
+        p.shuffleUpNext();
+        System.out.println("shuffled again: " + p.showUpNext());
+        System.out.println("playlist unchanged: " + p.showPlaylist());
     }
 }
